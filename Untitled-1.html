@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .x{
+      border-top: 2px dashed black;
+      width: 10000000000px;
+      height: 0;
+      position: absolute;
+      top: 500px;
+      animation-name: bb;
+      animation-duration: 40000s;
+    }
+    .f{
+      width: 50px;
+      height: 70px;
+      background-image: url("1760372011335.png");
+      background-repeat: no-repeat;
+      background-position: bottom;
+      background-size: 100%;
+      position: fixed;
+      left: 10px;
+      top: 430px;
+      border-radius: 40px 50px 100px 40px;
+    }
+    @keyframes bb{
+      from{
+        transform: translate(0);
+      }to{
+        transform: translate(-10000000000px);
+      }
+    }
+    .stop{
+      animation-play-state: paused !important;
+    }
+    .play{
+      animation-play-state: running !important;
+    }
+    /* @keyframes aa{
+      from{
+        translate: 0;
+      }to{
+        translate: 10000000000px;
+      }
+    } */
+    @keyframes jump{
+      0%{
+        transform: translateY(0);
+      }50%{
+        transform: translateY(-150px);
+      }100%{
+        transform: translateY(0);
+      }
+    }
+    .click{
+      animation-name: jump;
+      animation-duration: 0.5s;
+      animation-timing-function: ease;
+    }
+    #a{
+      width: 30px;
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      left: 400px;
+      background-image: url("ChatGPT Image 14 oct. 2025, 16_34_08.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 200%;
+      /* animation-name: bb;
+      animation-duration: 40000s; */
+    }
+
+    .q{
+      width: 30px;
+      height: 50px;
+      position: absolute;
+      bottom: 0;
+      background-image: url("ChatGPT Image 14 oct. 2025, 16_34_08.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 200%;
+      /* animation-name: bb;
+      animation-duration: 40000s; */
+    }
+  </style>
+</head>
+<body>
+    <div class="f stop" id="f"></div>
+  <div id="x" class="x stop">
+    <div>a</div>
+    <div id="a" class="stop">
+    </div>
+  </div>
+  <script>
+    const f = document.getElementById('f');
+    const x = document.getElementById('x');
+    a = document.getElementById('a');
+
+    function jump() {
+      f.classList.remove('click');
+      void f.offsetWidth; 
+      f.classList.add('click');
+    }
+
+function checkCollision(el1, el2) {
+  const r1 = el1.getBoundingClientRect();
+  const r2 = el2.getBoundingClientRect();
+  const p=5;
+  return (
+    ((r1.right-p >= r2.left && r1.right-p<=r2.right) || (r1.left+p>=r2.left && r1.left+p<=r2.right)) &&
+    (r1.bottom-p >=r2.top)
+  );
+}
+
+function vibrateSound() {
+  const ctx = new (window.AudioContext || window.webkitAudioContext)();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = "square";
+  osc.frequency.setValueAtTime(60, ctx.currentTime);
+  gain.gain.setValueAtTime(0.2, ctx.currentTime);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start();
+  osc.stop(ctx.currentTime + 0.25);
+}
+i=0;
+    function loop() {      
+      if (checkCollision(f, a)) {
+        f.classList.remove('play');
+        x.classList.remove('play');
+        f.classList.add('stop');
+        x.classList.add('stop');
+        vibrateSound();
+        console.log("🔥 تلامس حدث!");
+        return;
+      }
+      if(a.getBoundingClientRect().right<f.getBoundingClientRect().left){
+        z=a;
+        b=document.createElement('div');
+        b.classList.add('q');
+        i=i+1000;
+        b.style.left=z.getBoundingClientRect().right+i+"px";
+        x.appendChild(b);
+        a.remove();
+        a=b;
+        }
+        
+      requestAnimationFrame(loop);
+    }
+t=false;
+    document.addEventListener('keydown',(event)=>{
+      if(event.code==="Space"){  
+        if(f.classList.contains('stop') && !t)  {
+          loop();
+          f.classList.remove('stop');
+          x.classList.remove('stop');
+          f.classList.add('play');
+          x.classList.add('play');
+          t=true;
+        } else if(f.classList.contains('stop') && t){
+            f.style.display="none";
+            window.location.reload();
+        }else
+            jump();
+      }
+    })
+  </script>
+</body>
+</html>
