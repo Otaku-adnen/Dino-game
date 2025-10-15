@@ -89,6 +89,7 @@
   </style>
 </head>
 <body>
+  <h2 id="score"></h2>
     <div class="f stop" id="f"></div>
   <div id="x" class="x stop">
     <div>a</div>
@@ -99,6 +100,7 @@
     const f = document.getElementById('f');
     const x = document.getElementById('x');
     a = document.getElementById('a');
+    score=0;
 
     function jump() {
       f.classList.remove('click');
@@ -152,7 +154,8 @@ i=0;
         a.remove();
         a=b;
         }
-        
+        score++;
+        document.getElementById('score').textContent=score;
       requestAnimationFrame(loop);
     }
       function jumpSound() {
@@ -197,6 +200,7 @@ t=false;
   </script>
 </body>
 </html>
+
 
 
 
