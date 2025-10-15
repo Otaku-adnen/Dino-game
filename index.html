@@ -172,8 +172,7 @@ t=false;
             jump();
       }
     });
-    document.addEventListener('touchstart',(event)=>{
-      if(event.code==="Space"){  
+    document.addEventListener('touchstart',function(event)=>{
         if(f.classList.contains('stop') && !t)  {
           loop();
           f.classList.remove('stop');
@@ -188,8 +187,9 @@ t=false;
             jump();
           }
 
-    }
+      });
   </script>
 </body>
 </html>
+
 
