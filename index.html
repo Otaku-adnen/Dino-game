@@ -155,42 +155,49 @@ i=0;
         
       requestAnimationFrame(loop);
     }
+      function jumpSound() {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = "square";
+      osc.frequency.setValueAtTime(400, ctx.currentTime); // نغمة البداية
+      osc.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 0.2); // تصاعد خفيف
+
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start();
+      osc.stop(ctx.currentTime + 0.3);
+    }
 t=false;
     document.addEventListener('keydown',(event)=>{
-      if(event.code==="Space"){  
-        if(f.classList.contains('stop') && !t)  {
-          loop();
-          f.classList.remove('stop');
-          x.classList.remove('stop');
-          f.classList.add('play');
-          x.classList.add('play');
-          t=true;
-        } else if(f.classList.contains('stop') && t){
-            f.style.display="none";
-            window.location.reload();
-        }else
-            jump();
-      }
-    });
-    document.addEventListener('touchstart',()=>{
-        if(f.classList.contains('stop') && !t)  {
-          loop();
-          f.classList.remove('stop');
-          x.classList.remove('stop');
-          f.classList.add('play');
-          x.classList.add('play');
-          t=true;
-        } else if(f.classList.contains('stop') && t){
-            f.style.display="none";
-            window.location.reload();
-        }else
-            jump();
-          }
+      if(event.code==="Space")satrt();});
+    document.addEventListener('touchstart',start());
 
-      });
+    function start(){
+              if(f.classList.contains('stop') && !t)  {
+          loop();
+          f.classList.remove('stop');
+          x.classList.remove('stop');
+          f.classList.add('play');
+          x.classList.add('play');
+          t=true;
+        } else if(f.classList.contains('stop') && t){
+            f.style.display="none";
+            window.location.reload();
+        }else{
+            jumpSound();
+            jump();
+          }}
+    }
   </script>
 </body>
 </html>
+
 
 
 
