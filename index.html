@@ -172,7 +172,7 @@ t=false;
             jump();
       }
     });
-    document.addEventListener('touchstart',function(event)=>{
+    document.addEventListener('touchstart',()=>{
         if(f.classList.contains('stop') && !t)  {
           loop();
           f.classList.remove('stop');
@@ -191,5 +191,6 @@ t=false;
   </script>
 </body>
 </html>
+
 
 
