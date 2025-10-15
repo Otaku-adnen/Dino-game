@@ -171,7 +171,25 @@ t=false;
         }else
             jump();
       }
-    })
+    });
+    document.addEventListener('touchstart',(event)=>{
+      if(event.code==="Space"){  
+        if(f.classList.contains('stop') && !t)  {
+          loop();
+          f.classList.remove('stop');
+          x.classList.remove('stop');
+          f.classList.add('play');
+          x.classList.add('play');
+          t=true;
+        } else if(f.classList.contains('stop') && t){
+            f.style.display="none";
+            window.location.reload();
+        }else
+            jump();
+          }
+
+    }
   </script>
 </body>
 </html>
+
